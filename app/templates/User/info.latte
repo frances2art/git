@@ -1,0 +1,12 @@
+{var $title = 'Informace'}
+
+{block content}
+
+<h1>Informace</h1>
+
+{if $user->isLoggedIn()}
+        <div class="user">
+            <span>{$user->getIdentity()->name}</span><br />
+            <span>{$user->getIdentity()->role}</span>
+        </div>
+        {/if}

@@ -1,0 +1,123 @@
+{**
+ * My Application layout template.
+ *
+ * @copyright  Copyright (c) 2010 John Doe
+ * @package    MyApplication
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="description" content="Nette Framework web application skeleton">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>{ifset $title}{$title} &ndash; {/ifset}Úkolníček</title>
+
+	<link rel="stylesheet"  href="{$basePath}/css/tasklist.css" type="text/css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
+
+	<script type="text/javascript" src="{$basePath}/js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/jquery-ui.css">
+	<script type="text/javascript" src="{$basePath}/js/_netteForms.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/ajax.js"></script>
+        
+        <script type="text/javascript" src="{$basePath}/js/datepicker.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/timepicker.js"></script>
+	
+        <script type="text/javascript" src="{$basePath}/js/jquery.ui.datepicker-en-GB.min.js"></script>
+        
+        <script type="text/javascript" src="{$basePath}/js/jscripts/tiny_mce/tiny_mce.js"></script>
+        <script type="text/javascript">
+            tinyMCE.init({
+                    mode: "specific_textareas",
+                    editor_selector: "mceEditor",
+                    theme : "simple"
+            });
+        </script>
+{block head}{/block}
+</head>
+
+<body>
+<div id="header">
+    <div id="header-inner">
+        <div class="title"><a n:href="Homepage:">Úkolníček</a></div>
+          <a n:href="Cms:form">Formular</a> |
+           <a n:href="Homepage:contact">Kontakt</a> |
+	   <a n:href="Cms:admin">Tvorba stranky</a> |
+	 <span n:foreach="$cms as $list"><a n:href="Cms: $list->id">{$list->nadpis}</a>
+	 {if $user->isInRole('admin')}(<a n:href="Cms:admin $list->id">Edit</a>,<a n:href="deleteCms! $list->id">X</a>){/if}
+	 </span> 
+        {if $user->isLoggedIn()}
+        <div class="user">
+            <a n:href="User:info" class="icon user">{$user->getIdentity()->name} ({$user->getIdentity()->role})</span> |
+	    <a n:href="User:password">Změna hesla</a> |
+            {if isset($facebookLogoutUrl)} 
+            <a href="{$facebookLogoutUrl}">Odhlásit se FB</a>
+            {else}
+            <a n:href="signOut!">Odhlásit se</a>
+            {/if}
+            
+        </div>
+        {else}
+	<div class="user">
+	<a n:href="Sign:in">Přihlásit se</a> | 
+        <a n:href="Registration:default">Registrace</a>
+	</div>
+	{/if}
+	
+	
+        
+           
+        
+    </div>
+    
+</div>
+
+<div id="container">
+	
+	
+<div id="sidebar">
+    
+     <div class="title">Vyhledat</div>
+     <div>{control searchForm}</div>
+    <div class="title">Seznamy úkolů</div>
+
+    <div class="task-lists">
+        <ul>
+            <li n:foreach="$taskLists as $list"><a n:href="Task:default $list->id">{$list->title}</a></li>
+        </ul>
+    </div>
+{if $user->isLoggedIn()}
+    <fieldset>
+        <legend>Nový seznam</legend>
+        {form newTasklistForm}
+        <div class="new-tasklist-form">
+            {input title}
+            {input create}
+        </div>
+        {/form}
+    </fieldset>
+ {/if}
+</div>
+
+    <div id="content">
+        {snippet flashMessages}
+		<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+	{/snippet}
+
+        {include #content}
+    </div>
+
+    <div id="footer">
+
+    </div>
+</div>
+</body>
+</html>

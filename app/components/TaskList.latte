@@ -1,0 +1,29 @@
+{snippet}
+<table class="tasks">
+    <thead>
+    <tr>
+        <th class="created">&nbsp;</th>
+        <th class="tasklist" n:if="$displayTaskList">Seznam</th>
+        <th class="text">Úkol</th>
+        <th class="user" n:if="$displayUser">Přiřazeno</th>
+        <th class="action" n:if="$user->isLoggedIn()">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+    {control paginator}
+
+    {foreach $tasks as $task}
+    <tr n:class="$iterator->isOdd() ? odd : even, $task->done ? done">
+        <td class="created">{$task->created|date:'j. n. Y'}</td>
+        <td class="tasklist" n:if="$displayTaskList">{$task->tasklist->title}</td>
+        <td class="text"><a href="{plink Task:detail, task_id=>$task->id,id=>$task->tasklist->id}">{$task->text}</a></td>
+        <td class="user" n:if="$displayUser">{$task->user->name}</td>
+        <td class="action" n:if="$user->isLoggedIn()"><a n:if="!$task->done" n:href="markDone! $task->id" class="icon tick ajax">hotovo</a>
+                           <a n:if="$task->done" n:href="markUnDone! $task->id" class="icon tick ajax">nehotovo</a>
+        </td>
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+{/snippet}

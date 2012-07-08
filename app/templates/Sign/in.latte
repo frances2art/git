@@ -1,0 +1,37 @@
+{var $robots = noindex}
+
+{var $title = 'Přihlášení'}
+
+{block #content}
+
+<h1>Přihlášení</h1>
+
+{if ($uid)}
+<a href="{$facebookLogoutUrl}">Facebook logout</a>
+{$uid}
+{else}
+<a href="{$facebookLoginUrl}">Facebook login</a>
+{/if}
+
+
+{form signInForm}
+<div class="sign-in-form">
+    {control $form errors}
+
+    <div class="pair">
+        {label username /}
+        <div class="input">{input username}</div>
+    </div>
+    <div class="pair">
+        {label password /}
+        <div class="input">{input password}</div>
+    </div>
+    <div class="pair">
+        <div class="input">{input persistent} {label persistent /}</div>
+    </div>
+
+    <div class="pair">
+        <div class="input">{input login}</div>
+    </div>
+</div>
+{/form}

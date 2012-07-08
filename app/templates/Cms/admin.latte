@@ -1,0 +1,20 @@
+{var $title = 'Administrace textu'}
+
+{block content}
+
+
+<fieldset>
+
+
+    {form cmsForm}
+<div class="cms-form">
+    {control $form errors}
+    {label nadpis /} {input nadpis size => 50, autofocus => true}<br />
+    {label text /} {input text size => 50}<br />
+    {input create}
+</div>
+{/form}
+
+</fieldset>
+
+{/block}

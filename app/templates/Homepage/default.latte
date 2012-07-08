@@ -1,0 +1,15 @@
+{var $title = 'Přehled úkolů'}
+
+{block content}
+
+<h1>Přehled úkolů</h1>
+
+{if $user->isLoggedIn()}
+<h2>Mé úkoly</h2>
+{control userTasks}
+{/if}
+
+<h2>Všechny nesplněné</h2>
+{control incompleteTasks}
+
+{/block}

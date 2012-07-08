@@ -1,0 +1,28 @@
+{var $title = $taskList->title}
+
+{block content}
+
+{control navigation}
+
+
+<h1>{$taskList->title} {if $user->isInRole('admin')}<a n:href="deleteTaskList!" class="icon tick">Smazat</a>{/if}</h1>
+        {if $user->isLoggedIn()}
+<fieldset>
+    <legend>Přidat úkol</legend>
+{snippet form}
+    {form taskForm class => ajax}
+<div class="task-form">
+    {control $form errors}
+
+    {label text /} {input text size => 30, autofocus => true} {label userId /} {input userId} {input done} {input create}
+</div>
+{/form}
+{/snippet}
+</fieldset>
+{/if}
+
+
+{control taskList}
+
+
+{/block}

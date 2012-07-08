@@ -1,0 +1,22 @@
+<h2>Komentáře Komponenta</h2>
+
+{if $user->isLoggedIn()}
+<div n:foreach="$comments as $comment">{$iterator->getCounter()}. 
+    <span n:if="$displayMail">Mail:{$comment->mail},</span> {$comment->text}</div>
+
+<fieldset>
+    <legend>Komentář</legend>
+{snippet form}
+    {form commentForm class => ajax}
+<div class="cms-form">
+    {control $form errors}
+    {label mail /} {input mail size => 50, autofocus => true}<br />
+    {label text /} {input text size => 50}<br />
+    {input create}
+</div>
+{/form}
+{/snippet}
+   
+</fieldset>
+
+{/if}

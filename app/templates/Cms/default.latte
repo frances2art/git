@@ -1,0 +1,46 @@
+{var $title = $cm->nadpis}
+
+{block content}
+
+
+
+<h1>{$cm->nadpis|lower}</h1>
+{control fbToolsScript}
+{control likeButton, send=>false, width=>500}
+
+{cache $cm->id, expire => '+20 minutes'}
+<p>{!$cm->text}</p>
+{/cache}
+
+
+{control comment}
+
+
+
+<h2>Komentáře</h2>
+
+{if $user->isLoggedIn()}
+<div n:foreach="$comments as $comment">{$iterator->getCounter()}. Mail:{$comment->mail}, {$comment->text}</div>
+
+<fieldset>
+    <legend>Komentář</legend>
+{snippet form}
+    {form commentForm class => ajax}
+<div class="cms-form">
+    {control $form errors}
+    {label mail /} {input mail size => 50, autofocus => true}<br />
+    {label text /} {input text size => 50}<br />
+    {input create}
+</div>
+{/form}
+{/snippet}
+   
+</fieldset>
+
+{else}
+{control comments}
+{/if}
+
+
+
+{/block}
